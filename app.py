@@ -1,8 +1,10 @@
 from flask import *
 import pymysql
 import pymysql.cursors
+from flask_cors import CORS
 import os #it allows python code to talk/comminicate with the operating system(linux,windows,macos)
 app = Flask(__name__)
+CORS(app)# allows requests from external origins 
 #configure our upload folder
 app.config['UPLOAD_FOLDER'] = 'static/images'
 @app.route('/api/signup',methods=['POST'])
@@ -71,5 +73,16 @@ def add_products():
     #saving changes
     connection.commit()
     return jsonify ({'message':'product added successfully'})
+@app.route('/api/get_products')
+def get_products():
+    #connection to database
+    connection=pymysql.connect(host='localhost',user='root',password='',database='dailyyoghurts_swala')
+    cursor=connection.cursor(pymysql.cursors.DictCursor)
+    sql='select * from product_details'
+    #using the cursor to execute the sql query
+    cursor.execute(sql)
+    #fetch all the products_details from the database and store them in a variable
+    products_details=cursor.fetchall()
+    return jsonify({'products':products_details})
 if __name__ == '__main__':
     app.run(debug=True)
