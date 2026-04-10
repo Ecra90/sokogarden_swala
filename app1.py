@@ -15,7 +15,7 @@ def Signup():
     password = request.form['password']
     phone = request.form['phone']
     #connection to database
-    connection = pymysql.connect(host='mysql-ecraswala.alwaysdata.net',user='ecraswala',password='modcom2026',database='ecraswala_dailyyoghurts')
+    connection = pymysql.connect(host='localhost',user='root',password='',database='dailyyoghurts_swala')
     #cursor object creation-to help us in the manipulaltion of our backend to execute any functionality needed.
     cursor = connection.cursor()
     # sql query to insert
@@ -34,7 +34,7 @@ def signin():
      username = request.form['username']
      password = request.form['password']
      #connect to database
-     connection = pymysql.connect(host='mysql-ecraswala.alwaysdata.net',user='ecraswala',password='modcom2026',database='ecraswala_dailyyoghurts')
+     connection = pymysql.connect(host='localhost',user='root',password='',database='dailyyoghurts_swala')
      cursor = connection.cursor(pymysql.cursors.DictCursor)
      sql = 'select *from users where username = %s and password = %s'
      data = (username,password)
@@ -62,7 +62,7 @@ def add_products():
     photo_path = os.path.join(app.config['UPLOAD_FOLDER'],filename)
     product_photo.save(photo_path)
     #connection to database
-    connection = pymysql.connect(host='mysql-ecraswala.alwaysdata.net',user='ecraswala',password='modcom2026',database='ecraswala_dailyyoghurts')
+    connection = pymysql.connect(host='localhost',user='root',password='',database='dailyyoghurts_swala')
     #using a cursor object for the manipulation of the backend
     cursor=connection.cursor()
     #connection python and the database
@@ -76,7 +76,7 @@ def add_products():
 @app.route('/api/get_products')
 def get_products():
     #connection to database
-    connection=pymysql.connect(host='mysql-ecraswala.alwaysdata.net',user='ecraswala',password='modcom2026',database='ecraswala_dailyyoghurts')
+    connection=pymysql.connect(host='localhost',user='root',password='',database='dailyyoghurts_swala')
     cursor=connection.cursor(pymysql.cursors.DictCursor)
     sql='select * from product_details'
     #using the cursor to execute the sql query
